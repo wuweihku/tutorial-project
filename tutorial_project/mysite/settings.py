@@ -151,7 +151,9 @@ INSTALLED_APPS = (
     'djangocms_inherit',
     'djangocms_link',
     'reversion',
-    'mysite'
+    'mysite',
+    'polls',
+    'polls_plugin',
 )
 
 LANGUAGES = (
