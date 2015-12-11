@@ -1,28 +1,18 @@
 import unittest
-import httplib, urllib 
+import urllib 
+import http.client
 
 class TestGet(unittest.TestCase):
-    def test_baidu(self):    
-        conn = httplib.HTTPConnection("www.baidu.com")
-        conn.request("GET", "/index.html") 
-        r1 = conn.getresponse() 
-        self.assertEqual(r1.status, 200)
-        conn.close()
-    
-    def test_aofei(self):  
-        conn = httplib.HTTPConnection("passportapi.15166.com")
-        conn.request("GET", "/")
-        r2 = conn.getresponse() 
-        self.assertEqual(r2.status, 200)
-        conn.close()
-
     def test_register(self):
-        params = urllib.urlencode({'appid': 2, 'username': 'wuwei', 'password': '123456', 'repassword': '123456'})     
-        conn = httplib.HTTPConnection("passportapi.15166.com")  
+        params = urllib.parse.urlencode({'appid': '4e7dHsOyi5QjgpiBiemIreX74f7VgUCg7L', 'username': 'wuwei', 'password': '123456', 'repassword': '123456'})     
+        print(params)
+        conn = http.client.HTTPConnection("passportapi.15166.com")  
         conn.request("POST", "/user/signup", params)
         response = conn.getresponse()  
         self.assertEqual(response.status, 200)
-        print response.read()
+        data = eval(response.read())
+        print(data)
+        self.assertEqual(data["res"], 10002)
         conn.close()
 if __name__ == '__main__':
     unittest.main()
