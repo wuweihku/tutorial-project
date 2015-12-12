@@ -1,10 +1,11 @@
+# -*- coding: utf-8 -*-
 import unittest
 import urllib
 import urllib2
 
 class TestGet(unittest.TestCase):
 
-    url = 'http://passportapi.15166.com/user/signup'
+    url = 'http://passportapi.15166.com/user/signup'#所要访问的URL
 
     def setUp(self):
         pass
@@ -13,28 +14,17 @@ class TestGet(unittest.TestCase):
 
     def test_wuwei(self):
         
-        params =urllib.urlencode({'appid': '4e7dHsOyi5QjgpiBiemIreX74f7VgUCg7L', 'username': 'wuweihku', 'password': '123456', 'repassword': '123456'})     
-        
-        req = urllib2.urlopen(TestGet.url, params)
+        info = {'appid': '4e7dHsOyi5QjgpiBiemIreX74f7VgUCg7L', 'username': 'wuweihku', 'password': '123456', 'repassword': '123456'}#所要提交的信息
 
-        content = eval(req.read())
+        data = urllib.urlencode(info)#将信息编码成urllib2能过识别的数据
 
-        self.assertEqual(content["res"], 10001)
-#######################################################################
-    def test_qahechang(self):
+        req = urllib2.Request(TestGet.url, data)#构造请求对象
+               
+        response = urllib2.urlopen(req)#请求
 
-        params2 =urllib.urlencode({'appid': '4e7dHsOyi5QjgpiBiemIreX74f7VgUCg7L', 'username': 'qahechang', 'password': '123456', 'repassword': '123456'})
-        
-        req = urllib2.urlopen(TestGet.url, params2) 
+        the_page = eval(response.read())#读取发回的数据,并将字符串转换为字典
 
-        content2 = eval(req.read())
-
-        self.assertEqual(content2["res"], 10008)
-
-        
-
-
-
+        self.assertEqual(the_page["res"], 10001)#测试断言
 
 if __name__ == '__main__':
     unittest.main()
